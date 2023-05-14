@@ -427,7 +427,7 @@ class DIODE(torch.utils.data.Dataset):
 
             #     return image_tensor, data_dict
 
-            return img, cond
+            return {'A': img, 'B': cond, 'A_paths': img_path, 'B_paths': label_path}
         else:
 
             img = DiagonalGaussianDistribution(self.cache['img'][index].unsqueeze(0)).sample().squeeze(
