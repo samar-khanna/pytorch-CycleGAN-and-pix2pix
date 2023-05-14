@@ -395,20 +395,15 @@ def load_data(
 
     loader = DataLoader(
         dataset=trainset, num_workers=num_workers, pin_memory=True,
-        batch_sampler=DistInfiniteBatchSampler(
-            dataset_len=len(trainset), glb_batch_size=batch_size * dist.get_world_size(), seed=seed,
-            shuffle=not deterministic, filling=True, rank=dist.get_rank(), world_size=dist.get_world_size(),
-        )
+        batch_size=batch_size, shuffle=True
+        # batch_sampler=DistInfiniteBatchSampler(
+        #     dataset_len=len(trainset), glb_batch_size=batch_size * dist.get_world_size(), seed=seed,
+        #     shuffle=not deterministic, filling=True, rank=dist.get_rank(), world_size=dist.get_world_size(),
+        # )
     )
 
-    num_tasks = dist.get_world_size()
-    global_rank = dist.get_rank()
-    sampler = torch.utils.data.DistributedSampler(
-        valset, num_replicas=num_tasks, rank=global_rank, shuffle=False, drop_last=False
-    )
     val_loader = torch.utils.data.DataLoader(
-        valset, batch_size=batch_size,
-        sampler=sampler, num_workers=num_workers, drop_last=False)
+        valset, batch_size=batch_size, num_workers=num_workers, shuffle=False, drop_last=False)
 
     if include_test:
 
