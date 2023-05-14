@@ -362,7 +362,7 @@ def load_data(
 
     elif dataset == 'diode':
 
-        from .aligned_dataset import DIODE
+        from .diode_dataset import DIODE
         trainset = DIODE(dataroot=root, train=True, img_size=image_size,
                          random_crop=True, random_flip=True, disable_cache=True)
 
