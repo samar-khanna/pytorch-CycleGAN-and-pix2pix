@@ -144,7 +144,7 @@ class Night2DayDataset(torch.utils.data.Dataset):
             A = transform_image(A)
             B = transform_image(B)
 
-            return {'A': A, 'B': B, 'A_path': AB_path, 'B_path': AB_path}
+            return {'A': A, 'B': B, 'A_paths': AB_path, 'B_paths': AB_path}
         else:
 
             img = DiagonalGaussianDistribution(self.cache['img'][index].unsqueeze(0)).sample().squeeze(
