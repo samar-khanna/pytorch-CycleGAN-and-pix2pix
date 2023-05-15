@@ -157,7 +157,7 @@ class Night2DayDataset(torch.utils.data.Dataset):
             cond = transform_image(cond)
 
             AB_path = self.AB_paths[index]
-            return {'A': img, 'B': cond, 'A_path': AB_path, 'B_path': AB_path}
+            return {'A': img, 'B': cond, 'A_paths': AB_path, 'B_paths': AB_path}
 
     def __len__(self):
         """Return the total number of images in the dataset."""
