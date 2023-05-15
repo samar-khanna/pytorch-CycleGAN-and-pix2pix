@@ -314,7 +314,7 @@ def load_data(
 
     elif dataset == 'night2day':
 
-        from .aligned_dataset import Night2DayDataset
+        from .diode_dataset import Night2DayDataset
         trainset = Night2DayDataset(dataroot=root, train=True, img_size=image_size,
                                     random_crop=True, random_flip=True, )
 
@@ -324,7 +324,7 @@ def load_data(
             testset = Night2DayDataset(dataroot=root, train=False, img_size=image_size,
                                        random_crop=False, random_flip=False, disable_cache=True)
     elif dataset == 'maps':
-        from .aligned_dataset import MapsDataset
+        from .diode_dataset import MapsDataset
         trainset = MapsDataset(dataroot=root, train=True, img_size=image_size,
                                random_crop=True, random_flip=True)
 
@@ -333,7 +333,7 @@ def load_data(
 
     elif dataset == 'edges2handbags':
 
-        from .aligned_dataset import EdgesDataset
+        from .diode_dataset import EdgesDataset
         trainset = EdgesDataset(dataroot=root, train=True, img_size=image_size,
                                 random_crop=True, random_flip=True)
 
@@ -344,7 +344,7 @@ def load_data(
                                    random_crop=False, random_flip=False)
     elif dataset == 'facades':
 
-        from .aligned_dataset import FacadesDataset
+        from .diode_dataset import FacadesDataset
         trainset = FacadesDataset(dataroot=root, train=True, img_size=image_size,
                                   random_crop=True, random_flip=True)
 
@@ -353,7 +353,7 @@ def load_data(
 
     elif dataset == 'coco':
 
-        from .aligned_dataset import COCOStuff
+        from .diode_dataset import COCOStuff
         trainset = COCOStuff(dataroot=root, train=True, img_size=image_size,
                              random_crop=True, random_flip=True)
 
