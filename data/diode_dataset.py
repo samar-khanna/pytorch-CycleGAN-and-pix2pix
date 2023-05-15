@@ -144,7 +144,7 @@ class Night2DayDataset(torch.utils.data.Dataset):
             A = transform_image(A)
             B = transform_image(B)
 
-            return A, B
+            return {'A': A, 'B': B, 'A_path': AB_path, 'B_path': AB_path}
         else:
 
             img = DiagonalGaussianDistribution(self.cache['img'][index].unsqueeze(0)).sample().squeeze(
@@ -156,7 +156,8 @@ class Night2DayDataset(torch.utils.data.Dataset):
             img = transform_image(img)
             cond = transform_image(cond)
 
-            return img, cond
+            AB_path = self.AB_paths[index]
+            return {'A': img, 'B': cond, 'A_path': AB_path, 'B_path': AB_path}
 
     def __len__(self):
         """Return the total number of images in the dataset."""
