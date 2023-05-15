@@ -218,7 +218,7 @@ class EdgesDataset(torch.utils.data.Dataset):
         A = transform_image(A)
         B = transform_image(B)
 
-        return B, A
+        return {'A': A, 'B': B, 'A_paths': AB_path, 'B_paths': AB_path}
 
     def __len__(self):
         """Return the total number of images in the dataset."""
