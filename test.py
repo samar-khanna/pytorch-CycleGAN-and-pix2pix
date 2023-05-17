@@ -27,6 +27,9 @@ See training and test tips at: https://github.com/junyanz/pytorch-CycleGAN-and-p
 See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/qa.md
 """
 import os
+import numpy as np
+
+import util.util
 from options.test_options import TestOptions
 from data import create_dataset
 from data.load_data import load_data
@@ -53,7 +56,7 @@ if __name__ == '__main__':
         opt.dataroot,
         opt.dataset_mode,
         opt.batch_size,
-        opt.image_size,
+        opt.crop_size,
         None,
     )
     model = create_model(opt)      # create a model given opt.model and other options
@@ -75,6 +78,9 @@ if __name__ == '__main__':
     # For [CycleGAN]: It should not affect CycleGAN as CycleGAN uses instancenorm without dropout.
     if opt.eval:
         model.eval()
+
+    generated = []
+    reference = []
     for i, data in enumerate(val_dataset):
         if i >= opt.num_test:  # only apply our model to opt.num_test images.
             break
@@ -85,4 +91,13 @@ if __name__ == '__main__':
         if i % 5 == 0:  # save images to an HTML file
             print('processing (%04d)-th image... %s' % (i, img_path))
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, use_wandb=opt.use_wandb)
+
+        for label, im_data in visuals.items():
+            generated.append(util.util.tensor2im(im_data))
+            reference.append(data['A'])
+
+    generated = np.stack(generated)
+    np.savez(os.path.join(opt.results_dir, 'generated.npz'), generated)
+    reference = np.stack(reference)
+    np.savez(os.path.join(opt.results_dir, 'reference.npz'), reference)
     webpage.save()  # save the HTML
