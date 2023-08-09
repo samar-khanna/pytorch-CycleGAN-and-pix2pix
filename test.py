@@ -71,6 +71,7 @@ if __name__ == '__main__':
 
     if opt.use_vae:
         vae = load_vae('autoencoder/ldm_v21_vae.yaml')
+        vae.to(model.device)
 
     # initialize logger
     if opt.use_wandb:
