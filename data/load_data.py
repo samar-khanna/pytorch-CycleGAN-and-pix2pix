@@ -366,7 +366,7 @@ def load_data(
         trainset = DIODE(dataroot=root, train=True, img_size=image_size,
                          random_crop=True, random_flip=True, disable_cache=True)
 
-        valset = DIODE(dataroot=root, train=True, img_size=image_size,
+        valset = DIODE(dataroot=root, train=False, img_size=image_size,
                        random_crop=False, random_flip=False, disable_cache=True)
 
         if include_test:
