@@ -37,7 +37,7 @@ def get_transform(params, resize_size, crop_size, method=Image.BICUBIC, flip=Tru
     if flip:
         transform_list.append(transforms.Lambda(lambda img: __flip(img, params['flip'])))
     if totensor:
-        transform_list.append(transforms.ToTensor())
+        transform_list.append(get_tensor())
     return transforms.Compose(transform_list)
 
 
@@ -184,6 +184,17 @@ class EdgesDataset(torch.utils.data.Dataset):
 
             self.test_dir = os.path.join(dataroot, 'val')  # get the image directory
             self.AB_paths = make_dataset(self.test_dir)  # get image paths
+
+        # self.AB_paths = (
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/80_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/130_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/40_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/170_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/185_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/75_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/105_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/145_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/35_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/188_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/63_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/113_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/153_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/23_AB.jpg',
+        # '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/38_AB.jpg', '/atlas2/u/alexzhou907/01DATA/edges2handbags/val/148_AB.jpg')
+
         self.crop_size = img_size
         self.resize_size = img_size
 
@@ -373,6 +384,30 @@ class DIODE(torch.utils.data.Dataset):
 
         self.filenames = [l for l in os.listdir(self.image_root) if
                           not l.endswith('.pth') and not l.endswith('_depth.png') and not l.endswith('_normal.png')]
+        # self.filenames = ('00022_00194_outdoor_260_030.png', '00022_00197_outdoor_230_050.png',
+        #                   '00022_00195_outdoor_160_000.png', '00023_00199_outdoor_340_020.png',
+        #                   '00024_00202_outdoor_100_000.png', '00022_00194_outdoor_040_040.png',
+        #                   '00022_00196_outdoor_070_000.png', '00022_00193_outdoor_000_020.png',
+        #                   '00022_00196_outdoor_310_010.png', '00022_00194_outdoor_120_010.png',
+        #                   '00022_00193_outdoor_340_000.png', '00023_00200_outdoor_010_040.png',
+        #                   '00024_00202_outdoor_120_030.png', '00022_00197_outdoor_030_010.png',
+        #                   '00024_00201_outdoor_170_050.png', '00022_00196_outdoor_010_000.png',
+        #                   '00022_00193_outdoor_060_020.png', '00024_00202_outdoor_200_010.png',
+        #                   '00024_00202_outdoor_190_000.png', '00022_00194_outdoor_190_020.png',
+        #                   '00024_00201_outdoor_080_000.png', '00022_00197_outdoor_250_050.png',
+        #                   '00022_00195_outdoor_260_010.png', '00024_00202_outdoor_220_020.png',
+        #                   '00022_00197_outdoor_330_000.png', '00022_00196_outdoor_350_020.png',
+        #                   '00024_00201_outdoor_110_050.png', '00022_00197_outdoor_050_010.png',
+        #                   '00024_00202_outdoor_140_030.png', '00023_00199_outdoor_300_010.png',
+        #                   '00024_00201_outdoor_050_030.png', '00022_00194_outdoor_140_010.png',
+        #                   '00023_00198_outdoor_000_020.png', '00023_00200_outdoor_130_020.png',
+        #                   '00022_00197_outdoor_180_020.png', '00022_00197_outdoor_210_030.png',
+        #                   '00022_00193_outdoor_160_020.png', '00022_00195_outdoor_000_000.png',
+        #                   '00023_00199_outdoor_220_020.png', '00023_00200_outdoor_030_020.png',
+        #                   '00022_00196_outdoor_080_050.png', '00023_00200_outdoor_350_030.png',
+        #                   '00024_00201_outdoor_150_030.png', '00023_00200_outdoor_080_000.png',
+        #                   '00023_00198_outdoor_220_010.png', '00024_00201_outdoor_110_010.png',
+        #                   '00022_00196_outdoor_170_010.png', '00023_00199_outdoor_260_000.png')[19:20]
 
         self.cache_path = os.path.join(self.image_root, cache_name + f'_{img_size}.pth')
         if os.path.exists(self.cache_path) and not disable_cache:

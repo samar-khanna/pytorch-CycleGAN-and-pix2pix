@@ -65,6 +65,7 @@ if __name__ == '__main__':
         opt.batch_size,
         opt.crop_size,
         None,
+        include_test=True,
     )
     model = create_model(opt)      # create a model given opt.model and other options
     model.setup(opt)               # regular setup: load and print networks; create schedulers
