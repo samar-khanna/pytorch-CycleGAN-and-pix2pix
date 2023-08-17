@@ -402,10 +402,10 @@ def load_data(
         # )
     )
 
-    val_loader = torch.utils.data.DataLoader(
+    val_loader = DataLoader(
         valset, batch_size=batch_size, num_workers=num_workers, shuffle=False, drop_last=False)
 
-    if include_test:
+    if False:
 
         num_tasks = dist.get_world_size()
         global_rank = dist.get_rank()
